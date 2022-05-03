@@ -8,6 +8,8 @@ export default function Volumeslidercomp() {
   const dispatch = useDispatch();
   const [volume, setVolume] = useState(0);
 
+  console.log("test");
+
   useEffect(() => {
     dispatch(seqSettingsVolaction(volume));
   }, [dispatch, volume]);
