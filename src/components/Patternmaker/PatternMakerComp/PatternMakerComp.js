@@ -11,7 +11,7 @@ import { PatternUpdater } from "../../../store/seqState/actions";
 
 let notes = ["A1", "B1"];
 
-const vol = new Tone.Volume(0).toDestination();
+const vol = new Tone.Volume(-12).toDestination();
 const lpfilter = new Tone.Filter().connect(vol);
 const feedbackDelay = new Tone.FeedbackDelay("12n", 0).connect(lpfilter);
 
@@ -32,7 +32,6 @@ const samples = new Tone.Sampler({
 export default function PatternMakerComp(props) {
   const dispatch = useDispatch();
 
-  const [activeColumn, setColumn] = useState(0);
   const seqPattern = useSelector(selectSeqPattern);
   const seqSetting = useSelector(seqSettings);
   const [pattern, updatePattern] = useState(seqPattern.pattern); //INIT BY REDUX STATE
@@ -45,8 +44,6 @@ export default function PatternMakerComp(props) {
   useEffect(() => {
     const loop = new Tone.Sequence(
       (time, col) => {
-        setColumn(col);
-
         pattern.map((row, noteIndex) => {
           if (row[col]) {
             samples.triggerAttackRelease(notes[noteIndex], "16n", time);
@@ -80,7 +77,7 @@ export default function PatternMakerComp(props) {
       notes = ["A2", "G1"];
       break;
     default:
-      notes = ["B1", "G1"];
+      notes = ["E2", "G1"];
   }
 
   // SOUND EFFECTS
